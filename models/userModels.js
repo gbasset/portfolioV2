@@ -23,7 +23,7 @@ UserShema.pre('save', async function (next) {
     const user = this;
     const hash = await bcrypt.hash(user.password, 10);
     user.password = hash;
-
+    user.isAdmin = false;
     next();
 })
 

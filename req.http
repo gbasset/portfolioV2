@@ -49,7 +49,7 @@ POST http://localhost:3002/signup HTTP/1.1
 content-type: application/json
 
 {
-"email": "testgaeta@tst.com",
+"email": "test3gaeta@tst.com",
 "password": "test",
 "isAdmin": true
 }

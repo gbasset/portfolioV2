@@ -68,6 +68,10 @@ body {
   transition: opacity 0.5s ease-in 0.7s;
 }
 
+.input {
+  padding: 2px;
+}
+
 @media(max-width :480px) {
   .container {
     width: 100vw;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ContextProvider } from './Context/RootContext';
 import { BrowserRouter as Router, useHistory, Route, Redirect, Switch } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import './App.css';
 import picture1 from './pictures/monde.jpg';
@@ -13,7 +14,7 @@ import Login from './Component/Login';
 import News from './Component/News';
 import Home from './Component/Home';
 import Profile from './Component/Profile';
-
+import Dashboard from './Component/Auth/Dashboard';
 function App() {
   const history = useHistory();
   const [projects, setProjects] = useState([])
@@ -73,6 +74,8 @@ function App() {
           <Route path="/news" component={News} exact />
           <Route path="/login" component={Login} exact />
           <ProtectedRoute exact path='/profile' component={Profile} />
+          <ProtectedRoute exact path='/dashboard' component={Dashboard} mustBeAdmin={true} />
+          <Redirect exact from="/" to="/home" />
           {/* <div className="App">
           <div class="container">
           {imagesToMap.map(img =>

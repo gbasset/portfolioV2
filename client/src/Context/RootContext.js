@@ -2,15 +2,15 @@ import React, { createContext, useState, useEffect } from 'react'
 export const RootContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-    const prevAuth = window.sessionStorage.getItem('authenticated') || false;
-    const prevAuthBody = window.sessionStorage.getItem('authBody') || null;
+    const prevAuth = JSON.parse(window.sessionStorage.getItem('authenticated')) || false;
+    const prevAuthBody = JSON.parse(window.sessionStorage.getItem('authBody')) || null;
     const [authenticated, setAuthenticated] = useState(prevAuth);
     const [authBody, setAuthBody] = useState(prevAuthBody);
 
     useEffect(
         () => {
-            window.sessionStorage.setItem('authenticated', authenticated);
-            window.sessionStorage.setItem('authBody', authBody);
+            window.sessionStorage.setItem('authenticated', JSON.stringify(authenticated));
+            window.sessionStorage.setItem('authBody', JSON.stringify(authBody));
         },
         [authenticated, authBody]
     );
