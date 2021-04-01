@@ -24,10 +24,10 @@ export default function Login() {
                         // https://react-hot-toast.com/docs/toast
                     });
                 }, 500);
-                next();
                 setTimeout(() => {
                     history.push("/dashboard");
-                }, 700);
+                    next();
+                }, 1300);
             })
             .catch(error => {
                 console.log(error);
@@ -35,14 +35,9 @@ export default function Login() {
                 console.log({ ...state })
                 setTimeout(() => {
                     toast.dismiss(toastId);
-                    toast.error('Une erreur est survenue !', { icon: '☹️' });
+                    toast.error('Une erreur est survenue pendant la tentative de connexion', { icon: '☹️' });
                 }, 500);
             })
-        // toast.promise(myPromise, {
-        //     loading: 'Loading',
-        //     success: 'Got the data',
-        //     error: 'Error when fetching',
-        // });
     }
     return (
         <div>

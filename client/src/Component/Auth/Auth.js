@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
-import { RootContext } from '../../Context/RootContext';
+import React from 'react';
+
 import useInput from '../../hooks/useInput';
+
 export default function Auth({ handleSubmit }) {
-    const {
-        authenticated
-    } = useContext(RootContext);
+
     const { state, bind, reset } = useInput({
         email: '',
         password: ''

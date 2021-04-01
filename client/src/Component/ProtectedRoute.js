@@ -8,7 +8,6 @@ const ProtectedRoute = ({ component: Component, mustBeAdmin, ...rest }) => {
         authBody
     } = useContext(RootContext)
 
-    console.log("authenticated", authenticated);
     return (
         <Route render={
             props => {
