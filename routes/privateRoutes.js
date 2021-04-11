@@ -14,7 +14,7 @@ router.get('/secret', (req, res) => {
 
 //for projects
 router.post("/projects", addProject);
-router.patch("/project/:id", updateProjectById);
+router.patch("/project/:id/", updateProjectById);
 router.delete("/project/:id", deleteProjectById);
 
 //For the languages
@@ -29,6 +29,7 @@ router.delete("/languages/:id", deletelanguageById);
 router.post("/tags", addTag);
 router.patch("/tags/:id", updateTagById);
 router.get("/tags/:id", getTagById);
+router.get("/tags", getTags);
 router.delete("/tags/:id", deleteTagById);
 
 // images

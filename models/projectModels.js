@@ -11,7 +11,10 @@ const ProjectSchema = new mongoose.Schema({
         require: true,
     },
     links: {
-        type: [String],
+        type: [{
+            name: String,
+            url: String
+        }],
         require: true,
         "default": [],
     },

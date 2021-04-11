@@ -12,7 +12,9 @@ content-type: application/json
 
  {
         "links": [
-            "kokokoko"
+            {"name": "code",
+            "url": "test"
+            }
         ],
         "devices": ["desktop"],
         "language": [
@@ -22,7 +24,7 @@ content-type: application/json
             "lalala"
         ],
         "isMainProject": true,
-        "name": "TETE DE KICHE",
+        "name": "TETE DE KICHEtte",
         "description": "gaetano de la vega   ",
         "images": [
             {

@@ -4,6 +4,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useHistory } from "react-router-dom";
 import { RootContext } from '../Context/RootContext';
+import './Login.css';
 export default function Login() {
     let history = useHistory();
     const {
@@ -25,7 +26,7 @@ export default function Login() {
                     });
                 }, 500);
                 setTimeout(() => {
-                    history.push("/dashboard");
+                    history.push("/dashboard/projects");
                     next();
                 }, 1300);
             })
@@ -40,8 +41,7 @@ export default function Login() {
             })
     }
     return (
-        <div>
-            <h1>Connexion au compte</h1>
+        <div className="container-login">
             <Toaster />
             <Auth handleSubmit={submitLogin} />
         </div>

@@ -37,9 +37,9 @@ export default function News() {
     return (
         <div>
             <h1>News</h1>
-            <div class="container">
+            <div className="container">
                 {imagesToMap.map(img =>
-                    <div className={imageActive === img.id ? "pannel active" : "pannel"}
+                    <div key={img.id} className={imageActive === img.id ? "pannel active" : "pannel"}
                         onClick={() => setImageActive(img.id)}
                         style={{
                             backgroundImage: "url(" + `${img.url}` + ")",

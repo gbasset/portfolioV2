@@ -1,0 +1,30 @@
+.container-projects {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin: auto;
+}
+
+.project {
+    padding: 3px;
+    width: 250px;
+    height: 120px;
+    margin: 5px 4px;
+    border: 1px solid rgb(177, 176, 176);
+}
+
+.project h1 {
+    width: 80%;
+    margin: auto;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.project p {
+    width: 80%;
+    margin: auto;
+    text-align: left;
+    padding: 5px;
+}

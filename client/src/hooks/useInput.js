@@ -11,7 +11,7 @@ const useInput = (initialValue) => {
         reset: () => setstate(initialValue),
         bind: {
             onChange: handleChange,
-            className: 'input-custom'
+            // className: 'input-custom'
         }
     }
 }

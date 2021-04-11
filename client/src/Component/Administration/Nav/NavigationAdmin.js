@@ -2,26 +2,42 @@ import React, { useState, useEffect, useContext } from "react";
 import './NavigationAdmin.css';
 import { IoMdLogOut } from 'react-icons/io';
 import { useHistory } from "react-router-dom";
-
-export default function NavigationAdmin({ setAuthenticated, activeLink, setActiveLink, authBody }) {
+import { RootContext } from '../../../Context/RootContext';
+export default function NavigationAdmin({ authBody }) {
+    const {
+        setAuthenticated,
+        setAuthBody
+    } = useContext(RootContext)
+    const history = useHistory();
+    const [activeLink, setActiveLink] = useState();
     const disconnectAdmin = (e) => {
         e.preventDefault();
         window.sessionStorage.setItem('authenticated', false);
         window.sessionStorage.setItem('authBody', null);
-        setAuthenticated(false)
+        setAuthenticated(false);
+        setTimeout(() => {
+            history.push("/login");
+        }, 500);
     }
     const resturnToWebSite = () => {
         setTimeout(() => {
             history.push("/home");
         }, 500);
     }
-    const history = useHistory();
+    const goToSection = (section) => {
+        history.push(`/${section}`);
+        setActiveLink(`/${section}`)
+    }
+    useEffect(() => {
+        setActiveLink(history.location.pathname)
+    }, [history])
+    console.log(activeLink);
     return (
         <div>
             <nav className="container-navigation-user">
                 <header>
                     <div className="container-user-infos">
-                        Bonjour DIEUX !
+                        👼🏻 Bonjour DIEU !
                         <div className="container-name-user">
                             <span>{authBody && authBody.email} <IoMdLogOut className="item-admin"
                                 onClick={disconnectAdmin}
@@ -30,14 +46,14 @@ export default function NavigationAdmin({ setAuthenticated, activeLink, setActiv
                     </div>
                 </header>
                 <ul>
-                    <li onClick={(e) => setActiveLink(1)}
-                        className={activeLink === 1 ? "isActive" : ""}
+                    <li onClick={(e) => goToSection('dashboard/projects')}
+                        className={activeLink === '/dashboard/projects' || activeLink && activeLink.includes('project') ? "isActive" : ""}
                     >Mes projets</li>
-                    <li onClick={(e) => setActiveLink(2)}
-                        className={activeLink === 2 ? "isActive" : ""}
+                    <li onClick={(e) => goToSection('dashboard/languages')}
+                        className={activeLink === '/dashboard/languages' ? "isActive" : ""}
                     >Languages / Tags</li>
-                    <li onClick={(e) => setActiveLink(3)}
-                        className={activeLink === 3 ? "isActive" : ""}
+                    <li onClick={(e) => goToSection('dashboard/images')}
+                        className={activeLink === '/dashboard/images' ? "isActive" : ""}
                     >Images</li>
                     <li onClick={resturnToWebSite}
                     >Return to website</li>

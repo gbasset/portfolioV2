@@ -8,9 +8,13 @@ import './App.css';
 import ProtectedRoute from './Component/ProtectedRoute';
 import Login from './Component/Login';
 import News from './Component/Home/News';
-import Home from './Component/Home';
+import Home from './Component/Home/Home';
 import Profile from './Component/Profile';
 import Dashboard from './Component/Administration/Dashboard';
+import Project from './Component/Administration/Projects/Project';
+import LanguagesTagsManager from './Component/Administration/Languages/LanguagesTagsManager';
+import ProjectsAdministration from './Component/Administration/Projects/ProjectsAdministration';
+import ImagesAdministration from './Component/Administration/Images/ImagesAdministration';
 function App() {
   const history = useHistory();
   const [projects, setProjects] = useState([])
@@ -45,10 +49,14 @@ function App() {
           <Route path="/login" component={Login} exact />
           <ProtectedRoute exact path='/profile' component={Profile} />
           <ProtectedRoute exact path='/dashboard' component={Dashboard} mustBeAdmin={true} />
+          <ProtectedRoute path='/dashboard/languages' component={LanguagesTagsManager} mustBeAdmin={true} />
+          <ProtectedRoute path='/dashboard/projects' component={ProjectsAdministration} mustBeAdmin={true} />
+          <ProtectedRoute path='/dashboard/images' component={ImagesAdministration} mustBeAdmin={true} />
+          <Route exact path="/project/:id" component={Project} />
           <Redirect exact from="/" to="/home" />
-
         </Switch>
       </ContextProvider>
+
     </Router>
   );
 }

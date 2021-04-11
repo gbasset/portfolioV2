@@ -48,7 +48,12 @@ router.post('/login',
                         if (error) return next(error)
                         console.log(user);
                         const body = { _id: user._id, email: user.email, isAdmin: user.isAdmin }
-                        const token = jwt.sign({ user: body }, process.env.SECRET)
+                        const token = jwt.sign({ user: body }, process.env.SECRET, {
+                            expiresIn: "10h" // it will be expired after 10 hours
+                            //expiresIn: "20d" // it will be expired after 20 days
+                            //expiresIn: 120 // it will be expired after 120ms
+                            //expiresIn: "20s" // it will be expired after 120s
+                        })
                         res.json({ token, body })
                     })
                 } catch (error) {

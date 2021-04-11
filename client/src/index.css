@@ -17,7 +17,7 @@ body {
 
 .container {
   display: flex;
-  width: 90vw;
+  width: 100vw;
 }
 
 .pannel {
@@ -84,6 +84,11 @@ body {
 .isActive {
   color: #F6B93B;
   font-weight: bold;
+}
+
+.container-admin {
+  margin: 15px 50px;
+  width: 100%;
 }
 
 @media(max-width :480px) {

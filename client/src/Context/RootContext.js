@@ -9,8 +9,10 @@ export const ContextProvider = ({ children }) => {
 
     useEffect(
         () => {
-            window.sessionStorage.setItem('authenticated', JSON.stringify(authenticated));
-            window.sessionStorage.setItem('authBody', JSON.stringify(authBody));
+            if (authenticated) {
+                window.sessionStorage.setItem('authenticated', JSON.stringify(authenticated));
+                window.sessionStorage.setItem('authBody', JSON.stringify(authBody));
+            }
         },
         [authenticated, authBody]
     );
