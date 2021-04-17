@@ -97,7 +97,6 @@ export default function Project() {
 
     useEffect(() => {
         if (response) {
-            console.log("response", response);
             setDefaultSelect(response[0].devices.map(val =>
                 ({ value: val, label: val })))
             setDefaultSelectLanguages(response[0].language.map(val =>
@@ -183,7 +182,7 @@ export default function Project() {
             })
         }
     }
-    console.log("currentLink", currentLink);
+
     const addLinkToCurrentProject = () => {
         if (!currentLink._id) {
             let linkToChange = projectData.links.find(el => el.id === currentLink.id);
@@ -191,7 +190,6 @@ export default function Project() {
                 let projectCurrentData = { ...projectData };
                 const newLink = { ...currentLink };
                 projectCurrentData.links.push(newLink);
-                console.log("projectCurrentData", projectCurrentData);
                 setprojectData(projectCurrentData);
                 setModalIsOppen(false);
             } else {
