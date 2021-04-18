@@ -3,8 +3,10 @@ import Inputchange from '../../UI/InputChange';
 import useInput from '../../../hooks/useInput';
 import Modal from '../../UI/Modal';
 import Btn from '../../UI/Btn';
-export default function CardItem({ item, natureOfElement, registerChange }) {
+import PopinConfirm from '../../UI/PopinConfirm';
+export default function CardItem({ item, natureOfElement, registerChange, deleteElement }) {
     const [modalIsOppen, setModalIsOppen] = useState(false);
+    const [confirmIsOpen, setcconfirmIsOpen] = useState(false);
     const { state, setstate, bind } = useInput({ ...item });
     const register = () => {
         registerChange(state, setModalIsOppen)
@@ -13,8 +15,32 @@ export default function CardItem({ item, natureOfElement, registerChange }) {
         setstate({ ...item });
         setModalIsOppen(false)
     }
+    const deleteEl = () => {
+        deleteElement(state, setcconfirmIsOpen)
+    }
     return (
         <div>
+            {confirmIsOpen &&
+                <PopinConfirm
+                    cancel={() => setcconfirmIsOpen(false)}
+                    title={`Voullez vous vraiment supprimer ${state.value} ?`}
+                >
+                    <div className="btnCenter">
+                        <Btn
+                            onClickFunction={(e) => { setcconfirmIsOpen(false) }}
+                            message="Annuler"
+                            color="alert"
+                            style="primary"
+                        />
+                        <Btn
+                            onClickFunction={() => { deleteEl() }}
+                            message="Supprimer"
+                            color="success"
+                            style="outline"
+                        />
+                    </div>
+                </PopinConfirm>
+            }
             <Modal
                 isOpen={modalIsOppen}
                 width="500"
@@ -53,7 +79,7 @@ export default function CardItem({ item, natureOfElement, registerChange }) {
                 </div>
             </Modal>
             <h2 onClick={() => setModalIsOppen(true)}>{item.value}</h2>
-
+            <div onClick={() => setcconfirmIsOpen(true)}>Supprimer</div>
         </div>
     )
 }

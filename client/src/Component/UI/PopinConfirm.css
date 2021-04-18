@@ -1,0 +1,94 @@
+.containerConfirmPopin {
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000;
+}
+
+.confirmOverlay {
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    background: rgba(42, 49, 51, 0.64);
+}
+
+.contenuPopin {
+    position: absolute;
+    top: 40%;
+    background: #FFFFFF;
+    border-radius: 5px;
+    border-top: 10px solid #676fa5;
+    padding: 30px;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.textContentPopin {
+    margin-bottom: 15px;
+}
+
+.titlePopin {
+    font-weight: 500;
+}
+
+.textPopin {}
+
+.btnGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-closePopin {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.btn-closePopin i {
+    transform: rotate(0deg);
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.btn-closePopin:hover i {
+    transform: rotate(-90deg);
+}
+
+.btnCancelPopin {
+    background: #F6F7F8;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #9E9E9E;
+    padding: 10px;
+}
+
+.btnDeletePopin {
+    background: #D76666;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    color: #FFF;
+    padding: 10px;
+}
+
+.btnCenter {
+    width: 100%;
+    display: flex!important;
+    flex-direction: row!important;
+    width: 100%;
+}
