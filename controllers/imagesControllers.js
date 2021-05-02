@@ -13,8 +13,9 @@ export const getImages = async (req, res) => {
 export const postImages = async (req, res) => {
     try {
         const fileStr = req.body.data;
+        console.log("fileStr", req.body);
         const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-            upload_preset: 'dev_setups',
+            upload_preset: 'ml_default',
             use_filename: true,
             unique_filename: false
         });

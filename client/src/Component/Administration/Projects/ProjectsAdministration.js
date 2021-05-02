@@ -32,7 +32,7 @@ export default function ProjectsAdministration() {
             <div className="container-admin">
                 <h1>Liste projets</h1>
                 <Btn
-                    message='Crer un projet'
+                    message='Créer un projet'
                     onClickFunction={() => GoToNewProject()} />
                 <div className="container-projects">
                     {projects && projects.map(project =>

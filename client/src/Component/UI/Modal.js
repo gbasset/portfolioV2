@@ -1,5 +1,6 @@
 import React from 'react'
 import './modal.css'
+import { AiOutlineClose } from 'react-icons/ai';
 export default function Modal(props) {
 	let isOpen = props.isOpen || false;
 	const width = props.width;
@@ -29,7 +30,8 @@ export default function Modal(props) {
 			<div className="modal_inner" style={style}>
 				{!props.noClose &&
 					<a onClick={(ev) => hide(ev)} className="modal_close" title="Close">
-						<i className="fas fa-times"></i>
+						<AiOutlineClose />
+
 					</a>
 				}
 				{props.children}

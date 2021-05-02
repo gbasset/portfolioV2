@@ -9,23 +9,26 @@ import Btn from '../../UI/Btn';
 import Modal from '../../UI/Modal';
 import Inputchange from '../../UI/InputChange';
 import useInput from '../../../hooks/useInput';
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 export default function LanguagesTagsManager() {
     const {
         authBody,
     } = useContext(RootContext);
     const [modalIsOppen, setModalIsOppen] = useState(false);
-
     const [fetchData, setFetchData] = useState(true);
     const [selectedElements, setselectedElements] = useState('languages')
     const { response, error } = useFetch(fetchData, `/private/${selectedElements}?token=${authBody.token}`, 'get',);
     const [arrayOfElements, setArrayOfElements] = useState([]);
+    const [isLoading, setisLoading] = useState(false);
+
     const { state, setstate, bind } = useInput({
         vale: '',
         label: ''
     });
     useEffect(() => {
         if (response) {
-            console.log(response);
+            setisLoading(false)
             setArrayOfElements(response)
             setFetchData(false)
         }
@@ -34,8 +37,10 @@ export default function LanguagesTagsManager() {
     function changeSelectedElement(el) {
         setselectedElements(el)
         setFetchData(true)
+        setisLoading(false)
     }
     const registerChange = (elem, next) => {
+        setisLoading(true);
         axios.patch(`/private/${selectedElements}/${elem._id}/?token=${authBody.token}`, elem)
             .then(res => {
                 setTimeout(() => {
@@ -48,6 +53,7 @@ export default function LanguagesTagsManager() {
                 }, 500);
             })
             .catch(error => {
+                setisLoading(false);
                 toast.error('Une erreur est survenue pendant la sauvegarde', { icon: '☹️' });
             })
     }
@@ -59,6 +65,7 @@ export default function LanguagesTagsManager() {
         setModalIsOppen(false)
     }
     const registerANewModel = (elem) => {
+        setisLoading(true);
         axios.post(`/private/${selectedElements}/?token=${authBody.token}`, elem)
             .then(res => {
                 setTimeout(() => {
@@ -71,10 +78,12 @@ export default function LanguagesTagsManager() {
                 }, 500);
             })
             .catch(error => {
+                setisLoading(false);
                 toast.error('Une erreur est survenue pendant la sauvegarde', { icon: '☹️' });
             })
     }
     const deleteElement = (elem, next) => {
+        setisLoading(true);
         axios.delete(`/private/${selectedElements}/${elem._id}/?token=${authBody.token}`)
             .then(res => {
                 setTimeout(() => {
@@ -87,6 +96,7 @@ export default function LanguagesTagsManager() {
                 }, 500);
             })
             .catch(error => {
+                setisLoading(false);
                 toast.error('Une erreur est survenue pendant la suppression', { icon: '☹️' });
             })
     }
@@ -134,6 +144,17 @@ export default function LanguagesTagsManager() {
             <div className="container-admin">
                 <Toaster />
                 <h1>Gestion des languages et des tags</h1>
+                {isLoading &&
+                    <div className='container-loader'>
+                        <Loader
+                            type="Oval"
+                            color="#00BFFF"
+                            height={100}
+                            width={100}
+                            timeout={100} //3 secs
+                        />
+                    </div>
+                }
                 <div>
                     <div> <button onClick={() => changeSelectedElement('languages')}>Languages</button></div>
                     <div> <button onClick={() => changeSelectedElement('tags')}>Tags</button></div>

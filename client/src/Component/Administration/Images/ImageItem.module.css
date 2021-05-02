@@ -1,0 +1,13 @@
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+    width: 180px;
+    margin: 0px 4px;
+}
+
+.imageContainer img {
+    max-width: 100%;
+    min-height: 60%;
+    max-height: 60%;
+}

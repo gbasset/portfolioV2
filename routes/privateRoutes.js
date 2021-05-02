@@ -33,7 +33,7 @@ router.get("/tags", getTags);
 router.delete("/tags/:id", deleteTagById);
 
 // images
-router.get('/api/images', getImages);
-router.post('/api/upload', postImages);
+router.get('/images', getImages);
+router.post('/upload', postImages);
 
 export default router

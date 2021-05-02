@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import './App.css';
 
+
 import ProtectedRoute from './Component/ProtectedRoute';
 import Login from './Component/Login';
 import News from './Component/Home/News';

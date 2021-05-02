@@ -17,7 +17,8 @@ import { SingleDatePicker } from 'react-dates';
 import moment from 'moment';
 import Modal from '../../UI/Modal';
 import { v4 as uuidv4 } from 'uuid';
-
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 export default function Project() {
     let { id } = useParams();
     const animatedComponents = makeAnimated();
@@ -44,6 +45,7 @@ export default function Project() {
         name: '',
         url: ''
     });
+    const [isLoading, setisLoading] = useState(false);
     const getLanguages = () => {
         axios.get(`/private/languages?token=${authBody.token}`)
             .then(res => {
@@ -70,6 +72,7 @@ export default function Project() {
     useEffect(() => {
         if (id !== 'new') {
             setFetchData(true);
+            setisLoading(true);
         } else {
             setprojectData({
                 devices: [
@@ -105,6 +108,7 @@ export default function Project() {
                 ({ value: val, label: val })));
             setCreatedAt(moment(response[0].year))
             setprojectData(response[0]);
+            setisLoading(false)
             setFetchData(false);
         }
     }, [response]);
@@ -135,6 +139,7 @@ export default function Project() {
         setprojectData({ ...projectData, tags: newValue })
     }
     const saveProject = () => {
+        setisLoading(true);
         axios.patch(`/private/project/${id}/?token=${authBody.token}`, projectData)
             .then(res => {
                 setTimeout(() => {
@@ -142,13 +147,16 @@ export default function Project() {
                         icon: '🥳',
                         // https://react-hot-toast.com/docs/toast
                     });
+                    setisLoading(false);
                 }, 500);
             })
             .catch(error => {
+                setisLoading(false);
                 toast.error('Une erreur est survenue pendant la sauvegarde', { icon: '☹️' });
             })
     }
     const createProject = () => {
+        setisLoading(true);
         axios.post(`/private/projects/?token=${authBody.token}`, projectData)
             .then(res => {
                 setTimeout(() => {
@@ -156,9 +164,11 @@ export default function Project() {
                         icon: '🥳',
                         // https://react-hot-toast.com/docs/toast
                     });
+                    setisLoading(false);
                 }, 500);
             })
             .catch(error => {
+                setisLoading(false);
                 toast.error('Une erreur est survenue pendant la création', { icon: '☹️' });
             })
     }
@@ -205,6 +215,7 @@ export default function Project() {
             setModalIsOppen(false);
         }
     }
+    console.log("isLoading", isLoading);
     return (
         <div className="container">
             <NavigationAdmin />
@@ -247,6 +258,17 @@ export default function Project() {
             </Modal>
             <div className="container-admin">
                 <Toaster />
+                {isLoading &&
+                    <div className='container-loader'>
+                        <Loader
+                            type="Oval"
+                            color="#00BFFF"
+                            height={100}
+                            width={100}
+                            timeout={100} //3 secs
+                        />
+                    </div>
+                }
                 <div className="container-project">
                     <h1>Page d'édition du projet {projectData && projectData.name}</h1>
                     <label>Dates de l'événement</label>
