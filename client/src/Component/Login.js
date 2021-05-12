@@ -14,8 +14,7 @@ export default function Login() {
     const submitLogin = (event, state, next) => {
         event.preventDefault();
         const toastId = toast.loading('Chargement ...');
-        console.log(process.env.REACT_APP_SECRET);
-        axios.post(`${process.env.REACT_APP_SECRET}/login`, state)
+        axios.post(`/login`, state)
             .then(res => {
                 setAuthenticated(true);
                 setAuthBody(res.data)

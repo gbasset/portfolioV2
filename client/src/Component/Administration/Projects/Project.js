@@ -39,7 +39,7 @@ export default function Project() {
     const [tags, setTags] = useState();
     const [defaultSelectTags, setDefaultSelectTags] = useState();
     const [createdAt, setCreatedAt] = useState(moment());
-    const { response, error } = useFetch(fetchData, `${process.env.REACT_APP_SECRET}/project/${id}`, 'get',);
+    const { response, error } = useFetch(fetchData, `/project/${id}`, 'get',);
     const [modalIsOppen, setModalIsOppen] = useState(false);
     const [currentLink, setCurrentLink] = useState({
         name: '',
@@ -47,7 +47,7 @@ export default function Project() {
     });
     const [isLoading, setisLoading] = useState(false);
     const getLanguages = () => {
-        axios.get(`${process.env.REACT_APP_SECRET}/private/languages?token=${authBody.token}`)
+        axios.get(`/private/languages?token=${authBody.token}`)
             .then(res => {
                 setLanguages(res.data);
             })
@@ -56,7 +56,7 @@ export default function Project() {
             })
     }
     const getTags = () => {
-        axios.get(`${process.env.REACT_APP_SECRET}/private/tags?token=${authBody.token}`)
+        axios.get(`/private/tags?token=${authBody.token}`)
             .then(res => {
                 setTags(res.data);
             })
@@ -140,7 +140,7 @@ export default function Project() {
     }
     const saveProject = () => {
         setisLoading(true);
-        axios.patch(`${process.env.REACT_APP_SECRET}/private/project/${id}/?token=${authBody.token}`, projectData)
+        axios.patch(`/private/project/${id}/?token=${authBody.token}`, projectData)
             .then(res => {
                 setTimeout(() => {
                     toast.success('Sauvegarde réussie!', {
@@ -157,7 +157,7 @@ export default function Project() {
     }
     const createProject = () => {
         setisLoading(true);
-        axios.post(`${process.env.REACT_APP_SECRET}/private/projects/?token=${authBody.token}`, projectData)
+        axios.post(`/private/projects/?token=${authBody.token}`, projectData)
             .then(res => {
                 setTimeout(() => {
                     toast.success('Sauvegarde réussie!', {

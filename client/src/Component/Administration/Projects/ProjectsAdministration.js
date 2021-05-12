@@ -8,7 +8,7 @@ import NavigationAdmin from '../../Administration/Nav/NavigationAdmin';
 export default function ProjectsAdministration() {
     const [projects, setprojects] = useState([]);
     const [fetchData, setFetchData] = useState(true);
-    const { response, error } = useFetch(fetchData, `${process.env.REACT_APP_SECRET}/projects`, 'get',);
+    const { response, error } = useFetch(fetchData, '/projects', 'get',);
     let history = useHistory();
     const getTheProjects = () => {
         if (fetchData) {

@@ -20,6 +20,7 @@ const allowlist = process.env.CORS.split(";");
 var corsOptions = {
     origin: function (origin, callback) {
         if (allowlist.indexOf(origin) !== -1) {
+            console.log(origin);
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))

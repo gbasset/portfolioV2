@@ -18,7 +18,7 @@ export default function LanguagesTagsManager() {
     const [modalIsOppen, setModalIsOppen] = useState(false);
     const [fetchData, setFetchData] = useState(true);
     const [selectedElements, setselectedElements] = useState('languages')
-    const { response, error } = useFetch(fetchData, `${process.env.REACT_APP_SECRET}/private/${selectedElements}?token=${authBody.token}`, 'get',);
+    const { response, error } = useFetch(fetchData, `/private/${selectedElements}?token=${authBody.token}`, 'get',);
     const [arrayOfElements, setArrayOfElements] = useState([]);
     const [isLoading, setisLoading] = useState(false);
 
@@ -41,7 +41,7 @@ export default function LanguagesTagsManager() {
     }
     const registerChange = (elem, next) => {
         setisLoading(true);
-        axios.patch(`${process.env.REACT_APP_SECRET}/private/${selectedElements}/${elem._id}/?token=${authBody.token}`, elem)
+        axios.patch(`/private/${selectedElements}/${elem._id}/?token=${authBody.token}`, elem)
             .then(res => {
                 setTimeout(() => {
                     next(false);
@@ -66,7 +66,7 @@ export default function LanguagesTagsManager() {
     }
     const registerANewModel = (elem) => {
         setisLoading(true);
-        axios.post(`${process.env.REACT_APP_SECRET}/private/${selectedElements}/?token=${authBody.token}`, elem)
+        axios.post(`/private/${selectedElements}/?token=${authBody.token}`, elem)
             .then(res => {
                 setTimeout(() => {
                     setModalIsOppen(false);
@@ -84,7 +84,7 @@ export default function LanguagesTagsManager() {
     }
     const deleteElement = (elem, next) => {
         setisLoading(true);
-        axios.delete(`${process.env.REACT_APP_SECRET}/private/${selectedElements}/${elem._id}/?token=${authBody.token}`)
+        axios.delete(`/private/${selectedElements}/${elem._id}/?token=${authBody.token}`)
             .then(res => {
                 setTimeout(() => {
                     next(false);
