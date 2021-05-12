@@ -19,7 +19,7 @@ export default function ImagesAdministration() {
     const [fetchData, setFetchData] = useState(true);
     const [arrayOfElements, setArrayOfElements] = useState([]);
     const [isLoading, setisLoading] = useState(true);
-    const { response, error } = useFetch(fetchData, `/private/images?token=${authBody.token}`, 'get',);
+    const { response, error } = useFetch(fetchData, `${process.env.REACT_APP_SECRET}/private/images?token=${authBody.token}`, 'get',);
     useEffect(() => {
         if (response) {
             setisLoading(false)
