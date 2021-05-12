@@ -10,17 +10,24 @@ import passport from 'passport'
 import './auth/auth.js';
 import privateRoutes from './routes/privateRoutes.js';
 import bodyParser from 'body-parser';
+// Path avec ES module
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 dotenv.config();
 const PORT = process.env.PORT || 3002;
 const app = express();
+app.use(express.static('client/build'))
 const allowlist = process.env.CORS.split(";");
+console.log("allowlist", allowlist);
 var corsOptions = {
     origin: function (origin, callback) {
-        if (allowlist.indexOf(origin) !== -1) {
-            console.log(origin);
+        console.log("origin", origin);
+        if (origin == undefined) {
+            callback(null, true)
+        }
+        else if (allowlist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'))

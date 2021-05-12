@@ -6,11 +6,19 @@ import passport from 'passport';
 import '../auth/auth.js';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
+
+import cors from 'cors';
+// Path avec ES module
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 dotenv.config();
 
 const router = express.Router();
 
-router.get("/", getHello);
+
 
 router.get("/test", getTest);
 
@@ -18,7 +26,9 @@ router.get("/test", getTest);
 // router.post("/projects", catchErrors(addProject));
 router.get("/projects", getProjects);
 router.get("/project/:id", getProjectById);
-
+router.get('/*', (_, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})
 // Email
 router.post("/message", postEmail);
 
@@ -61,6 +71,7 @@ router.post('/login',
                 }
             })(req, res, next)
     })
+
 
 
 export default router;
