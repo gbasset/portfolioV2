@@ -91,11 +91,25 @@ body {
   width: 100%;
 }
 
+.container-admin h1 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .container-loader {
   position: absolute;
   top: 25%;
   left: 60%;
   z-index: 1000;
+}
+
+.lien {
+  color: #09090e;
+}
+
+.lien:hover {
+  color: #75a1ff;
 }
 
 @media(max-width :480px) {

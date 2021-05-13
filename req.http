@@ -1,4 +1,4 @@
-GET http://localhost:3002/private/languages?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYwNWNlYWMwYWE0Y2FjNTQyODY5NWQwMSIsImVtYWlsIjoidGVzdGdhZXRhQHRzdC5jb20ifSwiaWF0IjoxNjE3MjA2NDU1fQ.VtNILOVTO4czwBbtg7wmVouwsxTwB9zjRFJdfv_a_HE
+GET http://localhost:3002/private/languages?token=yourtoken
 
 ###
 GET http://localhost:3002/project/60491be244cafb58b49a779f
@@ -51,8 +51,8 @@ POST http://localhost:3002/signup HTTP/1.1
 content-type: application/json
 
 {
-"email": "test3gaeta@tst.com",
-"password": "test",
+"email": "tst@tst.com",
+"password": "test2mdpAsse",
 "isAdmin": true
 }
 #####
@@ -64,7 +64,7 @@ content-type: application/json
 "password": "test",
 }
 ##########
-GET http://localhost:3002/private/secret?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYwNWE0NDI2YjIyNTYwMDU4YzAwOTJkOCIsImVtYWlsIjoidHN0QHRzdC5jb20ifSwiaWF0IjoxNjE2NTI5ODU4fQ.GHOegLCM55uYR-Lgnrl9kzeR5NX5vuOcZ_Bbxwe9S-M HTTP/1.1
+GET http://localhost:3002/private/secret?token=yourtoken HTTP/1.1
 content-type: application/json
 
 ####

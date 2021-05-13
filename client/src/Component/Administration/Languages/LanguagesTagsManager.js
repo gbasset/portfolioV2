@@ -11,6 +11,7 @@ import Inputchange from '../../UI/InputChange';
 import useInput from '../../../hooks/useInput';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import styles from './LanguagesTagsManager.module.css'
 export default function LanguagesTagsManager() {
     const {
         authBody,
@@ -19,7 +20,7 @@ export default function LanguagesTagsManager() {
     const [fetchData, setFetchData] = useState(true);
     const [selectedElements, setselectedElements] = useState('languages')
     const { response, error } = useFetch(fetchData, `/private/${selectedElements}?token=${authBody.token}`, 'get',);
-    const [arrayOfElements, setArrayOfElements] = useState([]);
+    const [arrayOfElements, setArrayOfElements] = useState();
     const [isLoading, setisLoading] = useState(false);
 
     const { state, setstate, bind } = useInput({
@@ -37,7 +38,7 @@ export default function LanguagesTagsManager() {
     function changeSelectedElement(el) {
         setselectedElements(el)
         setFetchData(true)
-        setisLoading(false)
+        setisLoading(true)
     }
     const registerChange = (elem, next) => {
         setisLoading(true);
@@ -45,7 +46,7 @@ export default function LanguagesTagsManager() {
             .then(res => {
                 setTimeout(() => {
                     next(false);
-                    setFetchData(true)
+                    setFetchData(true);
                     toast.success('Sauvegarde réussie!', {
                         icon: '🥳',
                         // https://react-hot-toast.com/docs/toast
@@ -68,8 +69,8 @@ export default function LanguagesTagsManager() {
         setisLoading(true);
         axios.post(`/private/${selectedElements}/?token=${authBody.token}`, elem)
             .then(res => {
+                setModalIsOppen(false);
                 setTimeout(() => {
-                    setModalIsOppen(false);
                     setFetchData(true);
                     toast.success('Sauvegarde réussie!', {
                         icon: '🥳',
@@ -100,7 +101,24 @@ export default function LanguagesTagsManager() {
                 toast.error('Une erreur est survenue pendant la suppression', { icon: '☹️' });
             })
     }
-
+    if (!arrayOfElements) {
+        return (
+            <div className="container">
+                <NavigationAdmin />
+                <div className="container-admin">
+                    <div className='container-loader'>
+                        <Loader
+                            type="Oval"
+                            color="#00BFFF"
+                            height={100}
+                            width={100}
+                            timeout={10000} //3 secs
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
     return (
         <div className="container">
             <NavigationAdmin />
@@ -151,17 +169,29 @@ export default function LanguagesTagsManager() {
                             color="#00BFFF"
                             height={100}
                             width={100}
-                            timeout={100} //3 secs
+                            timeout={10000} //3 secs
                         />
                     </div>
                 }
-                <div>
-                    <div> <button onClick={() => changeSelectedElement('languages')}>Languages</button></div>
-                    <div> <button onClick={() => changeSelectedElement('tags')}>Tags</button></div>
+                <div className={styles.btnGroup}>
+                    <Btn
+                        message='Languages'
+                        onClickFunction={() => changeSelectedElement('languages')}
+                        style={'outline'}
+                        color={selectedElements === 'languages' ? 'primary' : 'secondary'}
+                    />
+                    <Btn
+                        message='Tags'
+                        onClickFunction={() => changeSelectedElement('tags')}
+                        style={'outline'}
+                        color={selectedElements !== 'languages' ? 'primary' : 'secondary'}
+                    />
                 </div>
-                <Btn
-                    message={`Ajouter`}
-                    onClickFunction={() => setModalIsOppen(true)} />
+                <div className={styles.btnAdd}>
+                    <Btn
+                        message={`Ajouter`}
+                        onClickFunction={() => setModalIsOppen(true)} />
+                </div>
                 <section>
                     {arrayOfElements && arrayOfElements.map(el =>
                         <CardItem key={el._id}

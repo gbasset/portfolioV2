@@ -19,6 +19,7 @@ import Modal from '../../UI/Modal';
 import { v4 as uuidv4 } from 'uuid';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import ImageItem from '../../Administration/Images/ImageItem';
 export default function Project() {
     let { id } = useParams();
     const animatedComponents = makeAnimated();
@@ -41,6 +42,8 @@ export default function Project() {
     const [createdAt, setCreatedAt] = useState(moment());
     const { response, error } = useFetch(fetchData, `/project/${id}`, 'get',);
     const [modalIsOppen, setModalIsOppen] = useState(false);
+    const [ImagesAccount, setImagesAccount] = useState([]);
+    const [modalImagesIsOppen, setmodalImagesIsOppen] = useState(false)
     const [currentLink, setCurrentLink] = useState({
         name: '',
         url: ''
@@ -215,7 +218,42 @@ export default function Project() {
             setModalIsOppen(false);
         }
     }
-    console.log("isLoading", isLoading);
+
+    const getImages = () => {
+        setisLoading(true);
+        axios.get(`/private/images?token=${authBody.token}`)
+            .then(res => {
+                setisLoading(false);
+                setImagesAccount(res.data);
+            })
+            .catch(error => {
+                setisLoading(false);
+                toast.error('Une erreur est survenue pendant la récupératin des images', { icon: '☹️' });
+            })
+    }
+    useEffect(() => {
+        if (modalImagesIsOppen) {
+            getImages();
+        }
+    }, [modalImagesIsOppen])
+    if (!projectData) {
+        return (
+            <div className="container">
+                <NavigationAdmin />
+                <div className="container-admin">
+                    <div className='container-loader'>
+                        <Loader
+                            type="Oval"
+                            color="#00BFFF"
+                            height={100}
+                            width={100}
+                            timeout={10000} //3 secs
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
     return (
         <div className="container">
             <NavigationAdmin />
@@ -256,6 +294,47 @@ export default function Project() {
                     />
                 </div>
             </Modal>
+            {modalImagesIsOppen &&
+                <Modal
+                    isOpen={modalImagesIsOppen}
+                    width="800"
+                    height="800"
+                    onClose={() => setmodalImagesIsOppen(false)}
+                >
+                    <div className="modal_header has_border">
+                        Ajouter des images au projet {projectData && projectData.name}
+                    </div>
+                    <div className="modal_body">
+                        {isLoading &&
+                            <div className='container-loader'>
+                                <Loader
+                                    type="Oval"
+                                    color="#00BFFF"
+                                    height={100}
+                                    width={100}
+                                    timeout={10000} //3 secs
+                                />
+                            </div>
+                        }
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }}>
+                            {ImagesAccount && ImagesAccount.map(img =>
+                                <ImageItem key={img.asset_id} image={img} />
+                            )}
+                        </div>
+                    </div>
+                    <div className=" modal_footer modal_footer_center ">
+                        <Btn
+                            onClickFunction={() => setmodalImagesIsOppen(false)}
+                            message="Annuler"
+                            color="alert"
+                        />
+                        <Btn
+                            onClickFunction={() => null}
+                            message="Ok"
+                        />
+                    </div>
+                </Modal>
+            }
             <div className="container-admin">
                 <Toaster />
                 {isLoading &&
@@ -271,6 +350,10 @@ export default function Project() {
                 }
                 <div className="container-project">
                     <h1>Page d'édition du projet {projectData && projectData.name}</h1>
+                    <Btn
+                        message="Valider"
+                        onClickFunction={!isNew ? saveProject : createProject}
+                    />
                     <label>Dates de l'événement</label>
                     <SingleDatePicker
                         date={createdAt} // momentPropTypes.momentObj or null,
@@ -349,12 +432,22 @@ export default function Project() {
                         value={projectData && projectData.description}
                         onChangeFunction={handleChange}
                     />
-                    <Btn
-                        message="Valider"
-                        onClickFunction={!isNew ? saveProject : createProject}
-                    />
+                    <div className="images-administration">
+                        <h2>Images</h2>
+                        <Btn
+                            message="Ajouter"
+                            onClickFunction={() => setmodalImagesIsOppen(true)}
+                        />
+
+                        {projectData && projectData.images.map(img =>
+                            <img src={img.url} alt={img.name} />
+                        )}
+                    </div>
+
                 </div>
+
             </div>
+
         </div>
     )
 }

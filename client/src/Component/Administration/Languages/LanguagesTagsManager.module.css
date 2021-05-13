@@ -1,0 +1,14 @@
+.btnAdd {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.btnGroup {
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+    margin: 15px auto;
+}

@@ -121,6 +121,17 @@ export default function StyledDropzone({ modalIsOppen,
                         />
                         }
                     </div>
+                    {isLoading &&
+                        <div className='container-loader'>
+                            <Loader
+                                type="Oval"
+                                color="#00BFFF"
+                                height={100}
+                                width={100}
+                                timeout={100000} //3 secs
+                            />
+                        </div>
+                    }
                 </div>
             </Modal>
 

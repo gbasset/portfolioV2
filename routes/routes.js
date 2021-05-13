@@ -17,20 +17,18 @@ const __dirname = dirname(__filename)
 dotenv.config();
 
 const router = express.Router();
-
-
 router.get("/test", getTest);
 
 // For projects
 // router.post("/projects", catchErrors(addProject));
 router.get("/projects", getProjects);
 router.get("/project/:id", getProjectById);
+// for the production
 router.get('/*', (_, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'))
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
 })
 // Email
 router.post("/message", postEmail);
-
 
 //Auth
 router.post('/signup',
@@ -47,7 +45,7 @@ router.post('/login',
     (req, res, next) => {
         passport.authenticate('login',
             async (err, user) => {
-                console.log(user);
+                console.log("user", user);
                 try {
                     if (err || !user) {
                         const error = new Error('Une erreur est survenue.')
