@@ -11,3 +11,11 @@
     min-height: 60%;
     max-height: 60%;
 }
+
+.imageTransformSelected {
+    border: 3px solid rgb(42, 133, 156);
+    cursor: default;
+    background-color: rgba(0, 92, 228, 0.15);
+    color: rgb(0, 0, 0);
+    box-shadow: rgb(0 92 228) 0px 0px 0px 3px;
+}

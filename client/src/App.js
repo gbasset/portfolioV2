@@ -54,7 +54,7 @@ function App() {
           <ProtectedRoute path='/dashboard/projects' component={ProjectsAdministration} mustBeAdmin={true} />
           <ProtectedRoute path='/dashboard/images' component={ImagesAdministration} mustBeAdmin={true} />
           <Route exact path="/project/:id" component={Project} />
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/login" />
         </Switch>
       </ContextProvider>
 

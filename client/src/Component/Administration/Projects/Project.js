@@ -49,6 +49,8 @@ export default function Project() {
         url: ''
     });
     const [isLoading, setisLoading] = useState(false);
+    const [imageSelected, setimageSelected] = useState();
+    console.log("imageSelected", imageSelected);
     const getLanguages = () => {
         axios.get(`/private/languages?token=${authBody.token}`)
             .then(res => {
@@ -93,7 +95,8 @@ export default function Project() {
                 images: [
                 ],
                 imageHome: {
-
+                    name: '',
+                    url: ''
                 },
                 year: moment(),
             })
@@ -235,7 +238,18 @@ export default function Project() {
         if (modalImagesIsOppen) {
             getImages();
         }
-    }, [modalImagesIsOppen])
+    }, [modalImagesIsOppen]);
+    const imageToAddToList = (image) => {
+        let imageToSelect = [...projectData.images];
+        if (imageToSelect.find(img => img.name === image.public_id)) {
+            imageToSelect = imageToSelect.filter(img => img.name !== image.public_id);
+            setprojectData(projet => ({ ...projet, images: imageToSelect }))
+        } else {
+            imageToSelect = [...imageToSelect, { name: image.public_id, url: image.secure_url }];
+        }
+        setprojectData(projet => ({ ...projet, images: imageToSelect }))
+        console.log(image);
+    }
     if (!projectData) {
         return (
             <div className="container">
@@ -318,18 +332,15 @@ export default function Project() {
                         }
                         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }}>
                             {ImagesAccount && ImagesAccount.map(img =>
-                                <ImageItem key={img.asset_id} image={img} />
+                                <ImageItem key={img.asset_id} image={img} selectImage={(e) => imageToAddToList(e)}
+                                    projectData={projectData}
+                                />
                             )}
                         </div>
                     </div>
                     <div className=" modal_footer modal_footer_center ">
                         <Btn
                             onClickFunction={() => setmodalImagesIsOppen(false)}
-                            message="Annuler"
-                            color="alert"
-                        />
-                        <Btn
-                            onClickFunction={() => null}
                             message="Ok"
                         />
                     </div>
@@ -426,6 +437,8 @@ export default function Project() {
                             )}
                         </ul>
                     </div>
+                    <h2>jkh</h2>
+
                     <TextAreaCustom
                         name='description'
                         label="Description"
@@ -433,15 +446,15 @@ export default function Project() {
                         onChangeFunction={handleChange}
                     />
                     <div className="images-administration">
-                        <h2>Images</h2>
-                        <Btn
-                            message="Ajouter"
-                            onClickFunction={() => setmodalImagesIsOppen(true)}
-                        />
+                        <h2 onClick={() => setmodalImagesIsOppen(true)}>Images du projet</h2>
 
-                        {projectData && projectData.images.map(img =>
-                            <img src={img.url} alt={img.name} />
-                        )}
+                        <div className='images-project-list'>
+                            {projectData && projectData.images.map(img =>
+                                <img
+                                    className="image-project"
+                                    src={img.url} alt={img.name} />
+                            )}
+                        </div>
                     </div>
 
                 </div>
