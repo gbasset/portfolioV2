@@ -14,11 +14,9 @@ export default function ImageItem({ image, setelementToDelete, selectImage, proj
     const getImagesSelected = () => {
         if (projectData && !imageHome) {
             const classeToMap = projectData.images.find(img => img.name === image.public_id) ? classes.imageTransformSelected : "";
-            console.log(classeToMap);
             setclassesOfImage(classeToMap)
         } else if (projectData && imageHome) {
             const classeToMap = projectData.imageHome.name === image.public_id ? classes.imageTransformSelected : "";
-            console.log(classeToMap);
             setclassesOfImage(classeToMap)
         }
     }

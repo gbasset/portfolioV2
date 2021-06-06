@@ -101,7 +101,7 @@ export default function ProjectsAdministration() {
                         </div>
                     </PopinConfirm>
                 }
-                <h1>Liste projets</h1>
+                <h1>Liste des projets</h1>
                 <div className="btn-create">
                     <Btn
                         message='Créer un projet'

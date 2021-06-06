@@ -31,7 +31,7 @@ export default function NavigationAdmin({ authBody }) {
     useEffect(() => {
         setActiveLink(history.location.pathname)
     }, [history])
-    console.log(activeLink);
+
     return (
         <div>
             <nav className="container-navigation-user">

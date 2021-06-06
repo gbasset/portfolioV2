@@ -38,7 +38,6 @@ export default function StyledDropzone({ modalIsOppen,
     const handleSubmitFile = (e) => {
         e.preventDefault();
         if (!selectedFile) return;
-        console.log("selectedFile", selectedFile);
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = () => {
@@ -50,7 +49,6 @@ export default function StyledDropzone({ modalIsOppen,
             setisLoading(false);
             setErrMsg('something went wrong!');
         };
-        console.log("reader", reader);
     };
 
     const uploadImage = async (base64EncodedImage) => {

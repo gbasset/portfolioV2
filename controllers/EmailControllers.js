@@ -33,10 +33,8 @@ export const postEmail = async (req, res) => {
     };
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log(error);
             res.status(500).send(error);
         } else {
-            console.log('Email sent: ' + info.response);
             res.status(200).send('Le message a été envoyé avec succès !');
         }
     });

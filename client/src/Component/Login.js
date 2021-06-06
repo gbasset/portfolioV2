@@ -33,7 +33,6 @@ export default function Login() {
             .catch(error => {
                 console.log(error);
                 setAuthenticated(false);
-                console.log({ ...state })
                 setTimeout(() => {
                     toast.dismiss(toastId);
                     toast.error('Une erreur est survenue pendant la tentative de connexion', { icon: '☹️' });

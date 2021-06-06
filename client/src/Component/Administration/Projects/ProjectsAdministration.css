@@ -4,6 +4,8 @@
     flex-wrap: wrap;
     width: 100%;
     margin: auto;
+    height: 86vh;
+    overflow: auto;
 }
 
 .project {
