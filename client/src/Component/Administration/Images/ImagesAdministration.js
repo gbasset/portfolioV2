@@ -105,12 +105,12 @@ export default function ImagesAdministration() {
                         onClickFunction={() => setModalIsOppen(true)} />
                 </div>
                 <div className={classes.containerImages}>
-                    <Toaster />
-                    <div className="containerImages">
+                    <>
+                        <Toaster />
                         {arrayOfElements && arrayOfElements.map(img =>
                             <ImageItem key={img.asset_id} image={img} setelementToDelete={(e) => setelementToDelete(e)} />
                         )}
-                    </div>
+                    </>
                     {isLoading &&
                         <div className='container-loader'>
                             <Loader

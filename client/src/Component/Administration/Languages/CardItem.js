@@ -4,6 +4,7 @@ import useInput from '../../../hooks/useInput';
 import Modal from '../../UI/Modal';
 import Btn from '../../UI/Btn';
 import PopinConfirm from '../../UI/PopinConfirm';
+import classes from './LanguagesTagsManager.module.css'
 export default function CardItem({ item, natureOfElement, registerChange, deleteElement }) {
     const [modalIsOppen, setModalIsOppen] = useState(false);
     const [confirmIsOpen, setcconfirmIsOpen] = useState(false);
@@ -78,8 +79,10 @@ export default function CardItem({ item, natureOfElement, registerChange, delete
                     />
                 </div>
             </Modal>
-            <h2 onClick={() => setModalIsOppen(true)}>{item.value}</h2>
-            <div onClick={() => setcconfirmIsOpen(true)}>Supprimer</div>
+            <div className={classes.languageItem}>
+                <span onClick={() => setModalIsOppen(true)}>{item.value}</span>
+                <div onClick={() => setcconfirmIsOpen(true)}>Supprimer</div>
+            </div>
         </div>
     )
 }

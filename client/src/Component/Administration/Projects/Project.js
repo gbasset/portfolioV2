@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
 import { RootContext } from '../../../Context/RootContext';
+import axios from 'axios';
 import NavigationAdmin from '../../Administration/Nav/NavigationAdmin';
 import useFetch from '../../../hooks/useFetch';
 import { useParams } from "react-router-dom";
@@ -42,6 +42,7 @@ export default function Project() {
     const [createdAt, setCreatedAt] = useState(moment());
     const { response, error } = useFetch(fetchData, `/project/${id}`, 'get',);
     const [modalIsOppen, setModalIsOppen] = useState(false);
+    const [modalIsOppen2, setmodalImagesIsOppen2] = useState(false);
     const [ImagesAccount, setImagesAccount] = useState([]);
     const [modalImagesIsOppen, setmodalImagesIsOppen] = useState(false)
     const [currentLink, setCurrentLink] = useState({
@@ -79,6 +80,10 @@ export default function Project() {
             setFetchData(true);
             setisLoading(true);
         } else {
+            setCurrentLink({
+                name: '',
+                url: ''
+            })
             setprojectData({
                 devices: [
                     "desktop"
@@ -235,10 +240,10 @@ export default function Project() {
             })
     }
     useEffect(() => {
-        if (modalImagesIsOppen) {
+        if (modalImagesIsOppen || modalIsOppen2) {
             getImages();
         }
-    }, [modalImagesIsOppen]);
+    }, [modalImagesIsOppen, modalIsOppen2]);
     const imageToAddToList = (image) => {
         let imageToSelect = [...projectData.images];
         if (imageToSelect.find(img => img.name === image.public_id)) {
@@ -248,13 +253,24 @@ export default function Project() {
             imageToSelect = [...imageToSelect, { name: image.public_id, url: image.secure_url }];
         }
         setprojectData(projet => ({ ...projet, images: imageToSelect }))
-        console.log(image);
+    }
+    const imagePresentation = (image) => {
+        const imageToSave = {
+            url: image.secure_url,
+            name: image.public_id
+        };
+        setprojectData(data => ({ ...data, imageHome: imageToSave }));
+    }
+    const deleteLinkToProject = () => {
+        const newArrayOfLinks = projectData.links.filter(el => el.id !== currentLink.id);
+        setprojectData({ ...projectData, links: [...newArrayOfLinks] });
+        setModalIsOppen(false);
     }
     if (!projectData) {
         return (
             <div className="container">
                 <NavigationAdmin />
-                <div className="container-admin">
+                <div>
                     <div className='container-loader'>
                         <Loader
                             type="Oval"
@@ -297,6 +313,13 @@ export default function Project() {
                     />
                 </div>
                 <div className=" modal_footer modal_footer_center ">
+                    {currentLink._id &&
+                        <Btn
+                            onClickFunction={() => deleteLinkToProject()}
+                            message="Supprimer"
+                            color="success"
+                        />
+                    }
                     <Btn
                         onClickFunction={() => setModalIsOppen(false)}
                         message="Annuler"
@@ -332,7 +355,10 @@ export default function Project() {
                         }
                         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }}>
                             {ImagesAccount && ImagesAccount.map(img =>
-                                <ImageItem key={img.asset_id} image={img} selectImage={(e) => imageToAddToList(e)}
+                                <ImageItem
+                                    key={img.asset_id}
+                                    image={img}
+                                    selectImage={(e) => imageToAddToList(e)}
                                     projectData={projectData}
                                 />
                             )}
@@ -341,6 +367,48 @@ export default function Project() {
                     <div className=" modal_footer modal_footer_center ">
                         <Btn
                             onClickFunction={() => setmodalImagesIsOppen(false)}
+                            message="Ok"
+                        />
+                    </div>
+                </Modal>
+            }
+            {modalIsOppen2 &&
+                <Modal
+                    isOpen={modalIsOppen2}
+                    width="800"
+                    height="800"
+                    onClose={() => setmodalImagesIsOppen2(false)}
+                >
+                    <div className="modal_header has_border">
+                        Changer l'image du projet {projectData && projectData.name}
+                    </div>
+                    <div className="modal_body">
+                        {isLoading &&
+                            <div className='container-loader'>
+                                <Loader
+                                    type="Oval"
+                                    color="#00BFFF"
+                                    height={100}
+                                    width={100}
+                                    timeout={10000} //3 secs
+                                />
+                            </div>
+                        }
+                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap' }}>
+                            {ImagesAccount && ImagesAccount.map(img =>
+                                <ImageItem
+                                    key={img.asset_id}
+                                    image={img}
+                                    selectImage={(e) => imagePresentation(e)}
+                                    projectData={projectData}
+                                    imageHome={true}
+                                />
+                            )}
+                        </div>
+                    </div>
+                    <div className=" modal_footer modal_footer_center ">
+                        <Btn
+                            onClickFunction={() => setmodalImagesIsOppen2(false)}
                             message="Ok"
                         />
                     </div>
@@ -361,11 +429,14 @@ export default function Project() {
                 }
                 <div className="container-project">
                     <h1>Page d'édition du projet {projectData && projectData.name}</h1>
-                    <Btn
-                        message="Valider"
-                        onClickFunction={!isNew ? saveProject : createProject}
-                    />
-                    <label>Dates de l'événement</label>
+                    <div className="btn-edit">
+                        <Btn
+                            message={!isNew ? "Enregistrer" : "Créer"}
+                            onClickFunction={!isNew ? saveProject : createProject}
+                        />
+                    </div>
+
+                    <label>Dates du projet</label>
                     <SingleDatePicker
                         date={createdAt} // momentPropTypes.momentObj or null,
                         id="your_unique_id"
@@ -383,7 +454,6 @@ export default function Project() {
                         value={projectData && projectData.name}
                         onChangeFunction={handleChange}
                     />
-
                     <div className="container-select-devices">
                         <label>Devices</label>
                         <Select
@@ -433,12 +503,13 @@ export default function Project() {
                         <label htmlFor="liens">Liens</label> <span onClick={() => oppenLinkEdit()}>Add</span>
                         <ul>
                             {projectData && projectData.links.map(link =>
-                                <li key={link._id} onClick={() => oppenLinkEdit(link)}>{link.url}</li>
+                                <li key={link._id}
+                                    onClick={() => oppenLinkEdit(link)}>
+                                    {link.url}
+                                </li>
                             )}
                         </ul>
                     </div>
-                    <h2>jkh</h2>
-
                     <TextAreaCustom
                         name='description'
                         label="Description"
@@ -446,8 +517,13 @@ export default function Project() {
                         onChangeFunction={handleChange}
                     />
                     <div className="images-administration">
+                        <h2 onClick={() => setmodalImagesIsOppen2(true)}>Image de présentation</h2>
+                        <div className='images-project-list'>
+                            {projectData && <img
+                                className="image-project"
+                                src={projectData.imageHome.url} alt={projectData.imageHome.name} />}
+                        </div>
                         <h2 onClick={() => setmodalImagesIsOppen(true)}>Images du projet</h2>
-
                         <div className='images-project-list'>
                             {projectData && projectData.images.map(img =>
                                 <img

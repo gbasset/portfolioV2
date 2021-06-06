@@ -2,20 +2,21 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
     width: 100%;
     margin: auto;
 }
 
 .project {
     padding: 3px;
-    width: 250px;
-    height: 120px;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 300px;
     margin: 5px 4px;
     border: 1px solid rgb(177, 176, 176);
 }
 
-.project h1 {
+.project h2 {
     width: 80%;
     margin: auto;
     font-weight: bold;
@@ -25,8 +26,12 @@
 .project p {
     width: 80%;
     margin: auto;
+    height: 53%;
     text-align: left;
-    padding: 5px;
+    /* padding: 5px; */
+    /* white-space: nowrap; */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .delete-item:hover {
@@ -40,4 +45,15 @@
     align-items: flex-end;
     width: 100%;
     margin-bottom: 10px;
+}
+
+.projects {
+    display: flex;
+    justify-content: start;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.projects span {
+    margin: 5px;
 }

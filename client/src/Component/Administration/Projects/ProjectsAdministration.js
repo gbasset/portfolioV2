@@ -122,8 +122,6 @@ export default function ProjectsAdministration() {
                     }
                     {projects && projects.map(project =>
                         <div className="project" key={project._id}>
-                            <h2>{project.name}</h2>
-                            <p>{project.description}</p>
                             <Link className='lien'
                                 to={{
                                     pathname: "/project/" + project._id,
@@ -131,11 +129,25 @@ export default function ProjectsAdministration() {
                                         idProject: project._id
                                     }
                                 }}>
-                                <div className=""> <MdModeEdit /> {project.name}</div>
+                                <h2>{project.name}</h2>
                             </Link>
-                            <span className="delete-item" onClick={() => setelementToDelete(project)}>
-                                <BsFillTrashFill />
-                            </span>
+                            <p>{project.description}</p>
+                            <div className='projects'>
+                                <span>
+                                    <Link className='lien'
+                                        to={{
+                                            pathname: "/project/" + project._id,
+                                            state: {
+                                                idProject: project._id
+                                            }
+                                        }}>
+                                        <div className=""> <MdModeEdit /></div>
+                                    </Link>
+                                </span>
+                                <span className="delete-item" onClick={() => setelementToDelete(project)}>
+                                    <BsFillTrashFill />
+                                </span>
+                            </div>
                         </div>
                     )}
                 </div>

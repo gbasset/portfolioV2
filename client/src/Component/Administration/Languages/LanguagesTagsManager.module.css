@@ -12,3 +12,10 @@
     width: 200px;
     margin: 15px auto;
 }
+
+.languageItem {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+    margin: 5px auto;
+}
