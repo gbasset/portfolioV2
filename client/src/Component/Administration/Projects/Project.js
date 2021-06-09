@@ -51,7 +51,7 @@ export default function Project() {
     });
     const [isLoading, setisLoading] = useState(false);
     const [imageSelected, setimageSelected] = useState();
-    console.log("imageSelected", imageSelected);
+
     const getLanguages = () => {
         axios.get(`/private/languages?token=${authBody.token}`)
             .then(res => {
@@ -74,7 +74,7 @@ export default function Project() {
         getLanguages();
         getTags();
     }, [])
-    console.log("projectData", projectData);
+
     useEffect(() => {
         if (id !== 'new') {
             setFetchData(true);
@@ -265,6 +265,12 @@ export default function Project() {
         const newArrayOfLinks = projectData.links.filter(el => el.id !== currentLink.id);
         setprojectData({ ...projectData, links: [...newArrayOfLinks] });
         setModalIsOppen(false);
+    }
+    const handleChangeChk = (e) => {
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        const project = { ...projectData };
+        project.isMainProject = value;
+        setprojectData(project)
     }
     if (!projectData) {
         return (
@@ -499,6 +505,9 @@ export default function Project() {
                             onChange={handleSelectChangeTags}
                         />
                     </div>
+                    <label htmlFor="isMain">Projet principal</label>
+                    <input type="checkbox" checked={projectData && projectData.isMainProject}
+                        onChange={handleChangeChk} />
                     <div>
                         <label htmlFor="liens">Liens</label> <span onClick={() => oppenLinkEdit()}>Add</span>
                         <ul>

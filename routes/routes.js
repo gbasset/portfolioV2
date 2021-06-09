@@ -1,5 +1,5 @@
 import express from 'express';
-import { getHello, getTest, getProjects, getProjectById } from '../controllers/projectsControllers.js';
+import { getHello, getTest, getProjects, getProjectById, getMainProjects } from '../controllers/projectsControllers.js';
 import { postEmail } from '../controllers/EmailControllers.js';
 import { catchErrors } from '../helpers.js';
 import passport from 'passport';
@@ -23,6 +23,8 @@ router.get("/test", getTest);
 // router.post("/projects", catchErrors(addProject));
 router.get("/projects", getProjects);
 router.get("/project/:id", getProjectById);
+router.get("/projectMain", getMainProjects);
+
 // for the production
 router.get('/*', (_, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));

@@ -22,6 +22,15 @@ export default function ProjectsAdministration() {
     const [elementToDelete, setelementToDelete] = useState()
     const { response, error } = useFetch(fetchData, '/projects', 'get',);
     let history = useHistory();
+    // useEffect(() => {
+    //     axios.get('/projectMain')
+    //         .then(res => {
+    //             console.log(res.data);
+    //         })
+    //         .catch(error => {
+
+    //         })
+    // }, []);
     const getTheProjects = () => {
         if (fetchData) {
             setFetchData(false);

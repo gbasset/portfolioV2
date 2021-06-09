@@ -25,6 +25,14 @@ export const getProjects = async (req, res) => {
         res.status(500).send(err)
     }
 }
+export const getMainProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ isMainProject: true });
+        projects && res.status(200).send(projects)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+}
 export const getProjectById = async (req, res) => {
     try {
         const project = await Project.find({ _id: req.params.id });
