@@ -25,6 +25,7 @@ router.get("/projects", getProjects);
 router.get("/project/:id", getProjectById);
 router.get("/projectMain", getMainProjects);
 router.get("/tags", getTags);
+router.get("/languages", getLanguages);
 // for the production
 router.get('/*', (_, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
