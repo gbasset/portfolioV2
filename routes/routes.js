@@ -1,6 +1,8 @@
 import express from 'express';
 import { getHello, getTest, getProjects, getProjectById, getMainProjects } from '../controllers/projectsControllers.js';
 import { postEmail } from '../controllers/EmailControllers.js';
+import { getLanguages } from '../controllers/languagesControllers.js';
+import { getTags } from '../controllers/tagsControllers.js';
 import { catchErrors } from '../helpers.js';
 import passport from 'passport';
 import '../auth/auth.js';
