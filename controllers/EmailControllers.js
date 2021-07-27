@@ -23,7 +23,7 @@ export const postEmail = async (req, res) => {
 
     const mailOptions = {
         from: from,
-        to: to,
+        to: 'gaetanbassetgaetan@gmail.com',
         subject: subject,
         html: `
         <h1> Vous avez reçu un mail de ${from} </h1>
