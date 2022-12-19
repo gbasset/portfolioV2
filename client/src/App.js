@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ContextProvider } from './Context/RootContext';
-import { BrowserRouter as Router, useHistory, Route, Navigate , Switch } from 'react-router-dom';
+import { BrowserRouter as Router, useHistory, Route, Navigate , Routes } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import './App.css';
@@ -44,7 +44,7 @@ function App() {
   return (
     <Router history={history}>
       <ContextProvider>
-        <Switch>
+        <Routes>
           <Route path="/home" component={Home} exact />
           <Route path="/news" component={News} exact />
           <Route path="/login" component={Login} exact />
@@ -55,7 +55,7 @@ function App() {
           <ProtectedRoute path='/dashboard/images' component={ImagesAdministration} mustBeAdmin={true} />
           <Route exact path="/project/:id" component={Project} />
           <Navigate  exact from="/" to="/login" />
-        </Switch>
+        </Routes>
       </ContextProvider>
 
     </Router>

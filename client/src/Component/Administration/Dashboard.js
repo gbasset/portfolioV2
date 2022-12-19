@@ -4,7 +4,7 @@ import NavigationAdmin from './Nav/NavigationAdmin';
 import ProjectsAdministration from './Projects/ProjectsAdministration';
 import LanguagesTagsManager from './Languages/LanguagesTagsManager';
 import ImagesAdministration from './Images/ImagesAdministration';
-import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Route, Redirect, Routes, useHistory } from 'react-router-dom';
 export default function Dashboard() {
     const {
         authenticated,
