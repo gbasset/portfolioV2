@@ -63,6 +63,15 @@ content-type: application/json
 "email": "testgaeta@tst.com",
 "password": "test",
 }
+#####
+POST http://localhost:5000/message HTTP/1.1
+content-type: application/json
+
+{
+   "subject" :"truc",
+     "message" : "un truc",
+     "from" : "machin@gmail.com"
+}
 ##########
 GET http://localhost:3002/private/secret?token=yourtoken HTTP/1.1
 content-type: application/json
