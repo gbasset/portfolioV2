@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import { RootContext } from '../Context/RootContext';
 const ProtectedRoute = ({ component: Component, mustBeAdmin, ...rest }) => {
     const {
@@ -15,7 +15,7 @@ const ProtectedRoute = ({ component: Component, mustBeAdmin, ...rest }) => {
                     if (authenticated === true && authBody.body.isAdmin) {
                         return <Component {...rest} {...props} />
                     } else {
-                        return <Redirect to={
+                        return <Navigate to={
                             {
                                 pathname: '/profile',
                                 state: {
@@ -28,7 +28,7 @@ const ProtectedRoute = ({ component: Component, mustBeAdmin, ...rest }) => {
                 else if (authenticated === true) {
                     return <Component {...rest} {...props} />
                 } else {
-                    return <Redirect to={
+                    return <Navigate to={
                         {
                             pathname: '/login',
                             state: {
