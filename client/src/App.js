@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ContextProvider } from './Context/RootContext';
-import { BrowserRouter as Router, useHistory, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, useHistory, Route, Navigate , Switch } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import './App.css';
@@ -54,7 +54,7 @@ function App() {
           <ProtectedRoute path='/dashboard/projects' component={ProjectsAdministration} mustBeAdmin={true} />
           <ProtectedRoute path='/dashboard/images' component={ImagesAdministration} mustBeAdmin={true} />
           <Route exact path="/project/:id" component={Project} />
-          <Redirect exact from="/" to="/login" />
+          <Navigate  exact from="/" to="/login" />
         </Switch>
       </ContextProvider>
 
