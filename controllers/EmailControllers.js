@@ -3,7 +3,8 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const smtpTransport = require('nodemailer-smtp-transport');
 import dotenv from 'dotenv';
-
+import HTML_TEMPLATE from './template.js';
+console.log('🚀--** ~ file: EmailControllers.js:7 ~ HTML_TEMPLATE:', HTML_TEMPLATE)
 
 dotenv.config();
 let transporter = nodemailer.createTransport(smtpTransport({
@@ -25,14 +26,11 @@ export const postEmail = async (req, res) => {
         from: from,
         to: 'gaetanbassetgaetan@gmail.com',
         subject: subject,
-        html: `
-        <h1> Vous avez reçu un mail de ${from} </h1>
-        <h3> Sujet : ${subject}</h3>
-        <div> " ${message} " <div> 
-        `
+        html: HTML_TEMPLATE(message, from, subject)
     };
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
+            console.log('🚀--** ~ file: EmailControllers.js:36 ~ error:', error)
             res.status(500).send(error);
         } else {
             res.status(200).send('Le message a été envoyé avec succès !');
